@@ -85,6 +85,7 @@ def auto_exam(driver: webdriver.Edge):
             break
         except:
             continue
+    time.sleep(5)
 
 
 
