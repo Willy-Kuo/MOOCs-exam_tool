@@ -50,6 +50,7 @@ class ClickSidebarElement():
 
 
 def auto_exam(driver: webdriver.Edge):
+    # to exam list
     to_classListPage(driver)
     driver.switch_to.parent_frame()
     driver.switch_to.frame("s_main")
@@ -67,6 +68,24 @@ def auto_exam(driver: webdriver.Edge):
             continue
     ClickSidebarElement(driver).to_exam()
 
+    # choose exam
+    driver.implicitly_wait(2)
+    driver.switch_to.parent_frame()
+    driver.switch_to.frame("s_main")
+    exam_titles = [element.find_element(By.TAG_NAME, "span").text for element in driver.find_elements(By.CSS_SELECTOR, ".element.title")]
+    testing_botton = driver.find_elements(By.CSS_SELECTOR, ".process-btn.pay.active")
+    while True:
+        try:
+            os.system("cls")
+            for n, name in enumerate(exam_titles):
+                print(f"[{n}]{name}", end='  ')
+            print()
+            choose_exam_index = int(input("Enter number:"))
+            testing_botton[choose_exam_index].click()
+            break
+        except:
+            continue
+
 
 
 
@@ -78,7 +97,7 @@ def auto_exam(driver: webdriver.Edge):
 
 
 def download_handout(driver: webdriver.Edge):
-    def Get_chapters():
+    def get_chapters():
         driver.switch_to.parent_frame()
         wait_exists(driver, name="s_catalog")
         driver.switch_to.frame("s_catalog")
@@ -115,7 +134,7 @@ def download_handout(driver: webdriver.Edge):
         driver.implicitly_wait(10)
         time.sleep(5)
 
-        chapter_names, chapter_elements = Get_chapters()
+        chapter_names, chapter_elements = get_chapters()
         for n, name in enumerate(chapter_names):
             print(f"[{n}]{name}", end='  ')
         print()
